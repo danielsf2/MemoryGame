@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private Button myButtons[];
     private Integer numbers[] = {1,2,3,4,5,6};
     private List<Integer> numbersList;
+    private ProgressBar progressBar;
 
     @RequiresApi(api = Build.VERSION_CODES.P)
     @Override
@@ -37,6 +39,10 @@ public class MainActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.P)
     public void initialize(){
+
+        progressBar = (ProgressBar)findViewById(R.id.progressBar);
+        resetProgressBar();
+
         shufle(numbers);
 
         numbersList = new ArrayList<>();
@@ -107,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(numbersList.size() > 0){
             numbersList.remove(0);
+            progressBar.setProgress(progressBar.getProgress()+1);
             if(numbersList.size() == 0)
                 Toast.makeText(MainActivity.this, "Parabéns, você ganhou!", Toast.LENGTH_LONG).show();
         }
@@ -130,6 +137,13 @@ public class MainActivity extends AppCompatActivity {
                 button.setVisibility(View.VISIBLE);
 
         view.getRootView().setBackgroundColor(Color.parseColor("#FFFFFF"));
+
+        resetProgressBar();
     }//reset
+
+    public void resetProgressBar(){
+        progressBar.setProgress(0);
+        progressBar.setMax(6);
+    }//resetProgressBar
 
 }//class MainActivity
